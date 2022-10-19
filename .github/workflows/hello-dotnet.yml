@@ -6,6 +6,9 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+
+    env:
+      testProject: Notes.Api.Test/Notes.Api.Test.csproj
     
     steps:
       - uses: actions/checkout@v3
@@ -19,10 +22,10 @@ jobs:
         run: dotnet --version
 
       - name: "Restore testar"
-        run: dotnet restore Notes.Api.Test/Notes.Api.Test.csproj
+        run: dotnet restore $testProject
       
       - name: "Bygg testar"
-        run: dotnet build --no-restore --configuration Release Notes.Api.Test/Notes.Api.Test.csproj
+        run: dotnet build --no-restore --configuration Release $testProject
       
       - name: "Køyr testar"
-        run: dotnet test --no-build --configuration Release --verbosity normal --logger trx Notes.Api.Test/Notes.Api.Test.csproj
+        run: dotnet test --no-build --configuration Release --verbosity normal --logger trx $testProject
